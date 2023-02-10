@@ -15,20 +15,11 @@ using Microsoft.Extensions.Options;
 
 namespace Microsoft.Identity.Web.UI.Areas.MicrosoftIdentity.Controllers
 {
-    /// <summary>
-    /// Controller used in web apps to manage accounts.
-    /// </summary>
  
-    [AllowAnonymous]
     [Route("[controller]/[action]")]
     public class AccountController : Controller
     {
  
-        /// <summary>
-        /// Constructor of <see cref="AccountController"/> from <see cref="MicrosoftIdentityOptions"/>
-        /// This constructor is used by dependency injection.
-        /// </summary>
-        /// <param name="microsoftIdentityOptionsMonitor">Configuration options.</param>
         public AccountController(UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
             RoleManager<IdentityRole> roleManager)

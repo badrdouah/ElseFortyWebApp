@@ -15,8 +15,8 @@ namespace ElseForty.Controllers
         private readonly IConfiguration configuration;
         private readonly IBugRepo bugRepo;
 
-        public string bugResolvedEventEndpoint { get; set; }
-        public string startOrchestrationClientEndPoint { get; set; }
+        public string? bugResolvedEventEndpoint { get; set; }
+        public string? startOrchestrationClientEndPoint { get; set; }
         public BugController(ILogger<HomeController> logger, IConfiguration configuration, IBugRepo bugRepo)
         {
             _logger = logger;
@@ -95,9 +95,7 @@ namespace ElseForty.Controllers
         [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> List()
-
         {
-
             var bugs = await bugRepo.GetAll();
             return View(bugs);
         }

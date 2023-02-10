@@ -29,8 +29,7 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 )
                 .AddRoles<IdentityRole>()
                 .AddAzureCosmosDbStores()
-              .AddDefaultTokenProviders(); ; //Add Identity stores
-
+                .AddDefaultTokenProviders();
 
 
 builder.Services.AddAuthentication()

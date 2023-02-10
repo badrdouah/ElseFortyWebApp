@@ -14,18 +14,17 @@ public class HomeController : Controller
     private readonly ILogger<HomeController> _logger;
     private readonly UserManager<IdentityUser> UserManager;
     private readonly RoleManager<IdentityRole> roleManager;
-    private readonly MyContext myContext;
+ 
 
-    public HomeController(ILogger<HomeController> logger, UserManager<IdentityUser > userManager, RoleManager<IdentityRole> roleManager )
+    public HomeController(ILogger<HomeController> logger,
+        UserManager<IdentityUser > userManager, RoleManager<IdentityRole> roleManager )
     {
         _logger = logger;
         this.UserManager = userManager;
         this.roleManager = roleManager;
-        this.myContext = myContext;
     }
 
-  
-    public async Task<IActionResult> Index( )
+    public  IActionResult Index( )
     {
         return View();
     }

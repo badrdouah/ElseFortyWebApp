@@ -5,18 +5,18 @@ using Microsoft.Azure.Cosmos.Linq;
 
 namespace ElseForty.Repositories
 {
-	public interface IBugRepo
-	{
+    public interface IBugRepo
+    {
         Task<List<BugModel>> GetAll();
-         Task<BugModel> Get(string id);
-        Task  Add(BugModel model);
+        Task<BugModel> Get(string id);
+        Task Add(BugModel model);
         Task Update(BugModel model);
         Task Delete(string id);
     }
-	public class BugRepo : IBugRepo
+    public class BugRepo : IBugRepo
     {
-		public BugRepo(IConfiguration configuration)
-		{
+        public BugRepo(IConfiguration configuration)
+        {
             Configuration = configuration;
             connectionString = configuration["CosmosDB:connectionString"];
             databaseId = configuration["CosmosDB:databaseId"];
@@ -25,9 +25,9 @@ namespace ElseForty.Repositories
 
         private IConfiguration Configuration { get; }
 
-        private string connectionString { get; }
-        private string databaseId { get; }
-        private string containerId { get; }
+        private string? connectionString { get; }
+        private string? databaseId { get; }
+        private string? containerId { get; }
 
         public async Task Add(BugModel model)
         {
@@ -48,7 +48,7 @@ namespace ElseForty.Repositories
         }
 
         public async Task<BugModel> Get(string id)
-		{
+        {
             BugModel result = null;
             using (var client = new CosmosClient(connectionString))
             {
@@ -59,14 +59,12 @@ namespace ElseForty.Repositories
                 var matches = queryable
                     .Where(p => p.id == id);
 
-
                 // Convert to feed iterator
                 using FeedIterator<BugModel> linqFeed = matches.ToFeedIterator();
 
-            
-                    FeedResponse<BugModel> response = await linqFeed.ReadNextAsync();
-                    if (response.Resource.Count() != 0) result = response.First();
-            
+                FeedResponse<BugModel> response = await linqFeed.ReadNextAsync();
+                if (response.Resource.Count() != 0) result = response.First();
+
             }
 
             return result;
@@ -98,10 +96,8 @@ namespace ElseForty.Repositories
             return result;
         }
 
-        public async  Task Update(BugModel model)
+        public async Task Update(BugModel model)
         {
-            //model.modificationDate = DateTime.Now;
-
             using (var client = new CosmosClient(connectionString))
             {
                 var container = client.GetContainer(databaseId, containerId);

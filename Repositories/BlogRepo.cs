@@ -5,19 +5,19 @@ using Microsoft.Azure.Cosmos.Linq;
 
 namespace ElseForty.Repositories
 {
-	public interface IBlogRepo
-	{
+    public interface IBlogRepo
+    {
         Task<List<BlogPostModel>> GetAll();
-         Task<BlogPostModel> Get(string id);
-        Task  Add(BlogPostModel model);
+        Task<BlogPostModel> Get(string id);
+        Task Add(BlogPostModel model);
         Task Update(BlogPostModel model);
         Task Delete(string id);
     }
 
-	public class BlogRepo : IBlogRepo
+    public class BlogRepo : IBlogRepo
     {
-		public BlogRepo(IConfiguration configuration)
-		{
+        public BlogRepo(IConfiguration configuration)
+        {
             Configuration = configuration;
             connectionString = configuration["CosmosDB:connectionString"];
             databaseId = configuration["CosmosDB:databaseId"];
@@ -26,9 +26,9 @@ namespace ElseForty.Repositories
 
         private IConfiguration Configuration { get; }
 
-        private string connectionString { get; }
-        private string databaseId { get; }
-        private string containerId { get; }
+        private string? connectionString { get; }
+        private string? databaseId { get; }
+        private string? containerId { get; }
 
         public async Task Add(BlogPostModel model)
         {
@@ -49,7 +49,7 @@ namespace ElseForty.Repositories
         }
 
         public async Task<BlogPostModel> Get(string id)
-		{
+        {
             BlogPostModel result = null;
             using (var client = new CosmosClient(connectionString))
             {
@@ -60,8 +60,8 @@ namespace ElseForty.Repositories
                 var matches = queryable
                     .Where(p => p.id == id);
                 using FeedIterator<BlogPostModel> linqFeed = matches.ToFeedIterator();
-                    FeedResponse<BlogPostModel> response = await linqFeed.ReadNextAsync();
-                    if (response.Resource.Count() != 0) result = response.First();
+                FeedResponse<BlogPostModel> response = await linqFeed.ReadNextAsync();
+                if (response.Resource.Count() != 0) result = response.First();
             }
 
             return result;
@@ -89,7 +89,7 @@ namespace ElseForty.Repositories
             return result;
         }
 
-        public async  Task Update(BlogPostModel model)
+        public async Task Update(BlogPostModel model)
         {
             model.modificationDate = DateTime.Now;
 

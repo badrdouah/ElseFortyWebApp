@@ -7,8 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
-
-
 using System;
 using Microsoft.Azure.Cosmos;
 using System.Net;
